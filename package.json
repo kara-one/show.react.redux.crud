@@ -1,5 +1,6 @@
 {
   "name": "test.react.redux.postgre",
+  "description": "Test task use React Reduce PostgreSQL",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
