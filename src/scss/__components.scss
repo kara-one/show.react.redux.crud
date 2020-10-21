@@ -1,0 +1,31 @@
+/** BUTTONS */
+$btn_height: 35px;
+
+.btn {
+    background-color: transparent;
+    height: $btn_height;
+    padding: 0 15px;
+    border: 0;
+    font-size: 20px;
+    line-height: $btn_height;
+    cursor: pointer;
+
+    &-add {
+        position: relative;
+        background-color: #ff0000;
+        padding-right: $btn_height;
+        color: #ffffff;
+
+        &::after {
+            content: '+';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: $btn_height;
+            height: $btn_height;
+            font-size: 30px;
+            line-height: $btn_height;
+            text-align: center;
+        }
+    }
+}

@@ -1,10 +1,10 @@
-import './Cards.css';
+import './Cards.scss';
 
 import Card from './Card';
 import React from 'react';
 
 const Cards = () => {
-    return <section>
+    return <section className="container">
         <Card />
     </section>;
 };
