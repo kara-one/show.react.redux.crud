@@ -2,12 +2,12 @@ import './Card.scss';
 
 import React from 'react';
 
-const Card = () => {
+export default ({ post }) => {
     return (
         <div className="card">
             <img className="card-img-top" src="..." alt="..." />
             <div className="card-body">
-                <h4 className="card-title">Заголовок карточки</h4>
+                <h4 className="card-title">Заголовок карточки {post}</h4>
                 <h6 className="card-subtitle">Подзаголовок карточки</h6>
                 <p className="card-text">Некоторый текст...</p>
 
@@ -25,5 +25,3 @@ const Card = () => {
         </div>
     );
 };
-
-export default Card;
