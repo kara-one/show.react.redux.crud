@@ -10,3 +10,17 @@
         width: 1024px;
     }
 }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 -15px;
+}
+
+.col-3 {
+    flex-grow: 1;
+    flex-basis: 0;
+    max-width: 100%;
+    padding: 0 15px;
+}

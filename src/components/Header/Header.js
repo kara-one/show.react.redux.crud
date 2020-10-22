@@ -11,7 +11,7 @@ const Header = () => {
                 </a>
 
                 <div className="header__buttons">
-                    <button className="btn btn-add">ADD</button>
+                    <button className="btn btn-danger btn-add">ADD</button>
                 </div>
             </div>
         </header>
