@@ -1,6 +1,8 @@
 import './Cards.scss';
 
+import AddCard from './AddCard';
 import Card from './Card';
+import { CardColumns } from 'react-bootstrap';
 import React from 'react';
 
 const Cards = ({ posts }) => {
@@ -12,11 +14,17 @@ const Cards = ({ posts }) => {
         );
     }
 
-    return posts.map((post) => (
-        <div className="col-3">
-            <Card post={post} key={post} />
-        </div>
-    ));
+    return (
+        <>
+            <CardColumns>
+                {posts.map((post) => (
+                    <Card post={post} key={post} />
+                ))}
+            </CardColumns>
+
+            <AddCard />
+        </>
+    );
 };
 
 export default Cards;
