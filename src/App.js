@@ -11,7 +11,7 @@ function App() {
 
             <section className="container">
                 <div className="row">
-                    <Cards posts={[1,2,3,4,5,6,7,8,9,10]} />
+                    <Cards />
                 </div>
             </section>
         </>

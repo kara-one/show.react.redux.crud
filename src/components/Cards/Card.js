@@ -11,11 +11,13 @@ import {
 import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { updatePost } from '../../redux/actions';
 
-export default ({ post }) => {
+const OneCard = ({ post, updatePost }) => {
     const [isEdit, setIsEdit] = useState(false);
-    let [item, setItem] = useState(
+    /** let [item, setItem] = useState(
         {
             postId: post,
             postImg: `/images/${post}.jpg`,
@@ -23,19 +25,27 @@ export default ({ post }) => {
             postPrice: post,
             postDescription: `Some quick example text to build on the card title and make up the bulk of the card's content.${post}`,
         },
-    );
-    // console.log('item: ', item);
+    ); */
+    let [item, setItem] = useState(post);
+    console.log('post: ', post);
+    console.log('item: ', item);
 
-    const handleShowView = () => setIsEdit(false);
     const handleShowEdit = () => setIsEdit(true);
+    const handleShowView = () => {
+        setItem({ ...post });
+        setIsEdit(false);
+    };
 
     const handlerChangeInput = (event) => {
-        setItem({ ...item, [event.target.name]: event.target.value })
-    }
+        setItem({ ...item, [event.target.name]: event.target.value });
+    };
 
     const handleSubmit = (event) => {
-        event.preventDefault()
-    }
+        event.preventDefault();
+        // console.log('item: ', item);
+        updatePost(item);
+        setIsEdit(false);
+    };
 
     return (
         <Card border="info">
@@ -49,7 +59,7 @@ export default ({ post }) => {
                                 type="text"
                                 placeholder="Enter image url"
                                 name="postImg"
-                                defaultValue={item.postImg}
+                                value={item.postImg}
                                 onChange={handlerChangeInput}
                             />
                         </Form.Group>
@@ -64,16 +74,14 @@ export default ({ post }) => {
                                 type="text"
                                 placeholder="Title"
                                 name="postTitle"
-                                defaultValue={item.postTitle}
+                                value={item.postTitle}
                                 onChange={handlerChangeInput}
                             />
                         </Form.Group>
                     </Collapse>
 
                     <Collapse in={!isEdit}>
-                        <Card.Subtitle>
-                            Price: ${item.postPrice}
-                        </Card.Subtitle>
+                        <Card.Subtitle>Price: ${item.postPrice}</Card.Subtitle>
                     </Collapse>
                     <Collapse in={isEdit}>
                         <Form.Group controlId="postPrice">
@@ -81,7 +89,7 @@ export default ({ post }) => {
                                 type="number"
                                 placeholder="Price"
                                 name="postPrice"
-                                defaultValue={item.postPrice}
+                                value={item.postPrice}
                                 onChange={handlerChangeInput}
                             />
                         </Form.Group>
@@ -97,7 +105,7 @@ export default ({ post }) => {
                                 rows={3}
                                 placeholder="Description"
                                 name="postDescription"
-                                defaultValue={item.postDescription}
+                                value={item.postDescription}
                                 onChange={handlerChangeInput}
                             />
                         </Form.Group>
@@ -147,7 +155,7 @@ export default ({ post }) => {
                                 <Button
                                     onClick={handleShowView}
                                     variant="light"
-                                    className="close"
+                                    className="close btn-close"
                                     size="lg"
                                     aria-label="Close"
                                 >
@@ -162,22 +170,8 @@ export default ({ post }) => {
     );
 };
 
-/* <div className="card col-3">
-    <img className="card-img-top" src="..." alt="..." />
-    <div className="card-body">
-        <h4 className="card-title">Заголовок карточки {post}</h4>
-        <h6 className="card-subtitle">Подзаголовок карточки</h6>
-        <p className="card-text">Некоторый текст...</p>
+const mapDispatchToProps = {
+    updatePost,
+};
 
-        <button className="btn btn-light btn-block">Edit</button>
-
-        <div
-            className="btn-toolbar justify-content-between"
-            role="group"
-        >
-            <button className="btn btn-light">Delete</button>
-            <button className="btn btn-light">Upgrate</button>
-            <button className="btn btn-light">Cancel</button>
-        </div>
-    </div>
-</div> */
+export default connect(null, mapDispatchToProps)(OneCard);

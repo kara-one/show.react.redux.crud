@@ -4,9 +4,10 @@ import AddCard from './AddCard';
 import Card from './Card';
 import { CardColumns } from 'react-bootstrap';
 import React from 'react';
+import { connect } from "react-redux";
 
-const Cards = ({ posts }) => {
-    if (!posts.length) {
+const Cards = ({ syncCards }) => {
+    if (!syncCards.length) {
         return (
             <div className="alert alert-info col-12" role="alert">
                 Постов нет
@@ -17,8 +18,8 @@ const Cards = ({ posts }) => {
     return (
         <>
             <CardColumns>
-                {posts.map((post) => (
-                    <Card post={post} key={post} />
+                {syncCards.map((post) => (
+                    <Card post={post} key={post.postId} />
                 ))}
             </CardColumns>
 
@@ -27,4 +28,8 @@ const Cards = ({ posts }) => {
     );
 };
 
-export default Cards;
+const mapStateToProps = (state) => ({
+    syncCards: state.cards.cards,
+});
+
+export default connect(mapStateToProps, null)(Cards);
