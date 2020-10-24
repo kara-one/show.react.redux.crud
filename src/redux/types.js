@@ -1,0 +1,2 @@
+export const CREATE_POST = 'POST/CREATE_POST'
+export const UPDATE_POST = 'POST/UPDATE_POST';
