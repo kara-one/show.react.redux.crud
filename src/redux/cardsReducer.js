@@ -45,7 +45,6 @@ export const cardsReducer = (state = initState, action) => {
                         ? action.payload
                         : item,
                 ),
-                // cards: [...state.cards, action.payload]
             };
         case DELETE_POST:
             return {

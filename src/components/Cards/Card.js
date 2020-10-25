@@ -51,7 +51,7 @@ const OneCard = ({ post, updatePost, showModalDelete, idItemDelete }) => {
     };
     const handleShowDelete = (event) => {
         event.preventDefault();
-        console.log('item: ', item);
+
         idItemDelete(item.postId);
         showModalDelete(true);
     };
@@ -62,7 +62,7 @@ const OneCard = ({ post, updatePost, showModalDelete, idItemDelete }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log('item: ', item);
+
         updatePost(item);
         setIsEdit(false);
     };
