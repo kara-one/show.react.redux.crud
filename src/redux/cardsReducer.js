@@ -1,7 +1,16 @@
-import { CREATE_POST, SHOW_MODAL_CREATE, UPDATE_POST } from './types';
+import {
+    CREATE_POST,
+    DELETE_POST,
+    ID_ITEM_DELETE,
+    SHOW_MODAL_CREATE,
+    SHOW_MODAL_DELETE,
+    UPDATE_POST,
+} from './types';
 
 const initState = {
     showModalCreate: false,
+    showModalDelete: false,
+    idItemDelete: 0,
     cards: [...Array(10)].map((item, index) => ({
         postId: (index + Date.now()).toString(),
         postImg: `/images/${index + 1}.jpg`,
@@ -38,10 +47,27 @@ export const cardsReducer = (state = initState, action) => {
                 ),
                 // cards: [...state.cards, action.payload]
             };
+        case DELETE_POST:
+            return {
+                ...state,
+                cards: state.cards.filter((item) =>
+                    item.postId !== action.payload
+                ),
+            };
         case SHOW_MODAL_CREATE:
             return {
                 ...state,
                 showModalCreate: action.payload,
+            };
+        case SHOW_MODAL_DELETE:
+            return {
+                ...state,
+                showModalDelete: action.payload,
+            };
+        case ID_ITEM_DELETE:
+            return {
+                ...state,
+                idItemDelete: action.payload,
             };
         default:
             return state;

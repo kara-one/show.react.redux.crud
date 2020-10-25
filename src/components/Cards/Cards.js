@@ -3,6 +3,7 @@ import './Cards.scss';
 import AddCard from './AddCard';
 import Card from './Card';
 import { CardColumns } from 'react-bootstrap';
+import DeleteCard from './DeleteCard';
 import React from 'react';
 import { connect } from "react-redux";
 
@@ -24,6 +25,7 @@ const Cards = ({ syncCards }) => {
             </CardColumns>
 
             <AddCard />
+            <DeleteCard />
         </>
     );
 };

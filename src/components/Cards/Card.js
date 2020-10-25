@@ -9,13 +9,13 @@ import {
     Form,
 } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { idItemDelete, showModalDelete, updatePost } from '../../redux/actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { updatePost } from '../../redux/actions';
 
-const OneCard = ({ post, updatePost }) => {
+const OneCard = ({ post, updatePost, showModalDelete, idItemDelete }) => {
     const [isEdit, setIsEdit] = useState(false);
     /** let [item, setItem] = useState(
         {
@@ -48,6 +48,12 @@ const OneCard = ({ post, updatePost }) => {
     const handleShowView = () => {
         setItem({ ...post });
         setIsEdit(false);
+    };
+    const handleShowDelete = (event) => {
+        event.preventDefault();
+        console.log('item: ', item);
+        idItemDelete(item.postId);
+        showModalDelete(true);
     };
 
     const handlerChangeInput = (event) => {
@@ -152,6 +158,7 @@ const OneCard = ({ post, updatePost }) => {
                                 aria-label="Edit page Button group"
                             >
                                 <Button
+                                    onClick={handleShowDelete}
                                     variant="danger"
                                     size="lg"
                                     aria-label="Delete"
@@ -183,9 +190,15 @@ const OneCard = ({ post, updatePost }) => {
         </Card>
     );
 };
+/* 
+const mapStateToProps = (state) => ({
+    showModalDelete: state.cards.showModalDelete,
+}); */
 
 const mapDispatchToProps = {
     updatePost,
+    idItemDelete,
+    showModalDelete,
 };
 
 export default connect(null, mapDispatchToProps)(OneCard);

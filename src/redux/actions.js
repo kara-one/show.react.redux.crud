@@ -1,4 +1,11 @@
-import { CREATE_POST, DELETE_POST, SHOW_MODAL_CREATE, UPDATE_POST } from './types';
+import {
+    CREATE_POST,
+    DELETE_POST,
+    ID_ITEM_DELETE,
+    SHOW_MODAL_CREATE,
+    SHOW_MODAL_DELETE,
+    UPDATE_POST,
+} from './types';
 
 export function createPost(post) {
     return {
@@ -24,6 +31,20 @@ export function deletePost(postId) {
 export function showModalCreate(state) {
     return {
         type: SHOW_MODAL_CREATE,
+        payload: state,
+    };
+}
+
+export function showModalDelete(state) {
+    return {
+        type: SHOW_MODAL_DELETE,
+        payload: state,
+    };
+}
+
+export function idItemDelete(state) {
+    return {
+        type: ID_ITEM_DELETE,
         payload: state,
     };
 }
