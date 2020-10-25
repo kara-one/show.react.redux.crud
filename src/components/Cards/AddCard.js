@@ -1,29 +1,50 @@
 import { Button, Form, Modal } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPost, showModalCreate } from '../../redux/actions';
 
-export default () => {
-    const [show, setShow] = useState(false);
+import { connect } from 'react-redux';
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+const AddCard = ({ stateShowModalCreate, showModalCreate, createPost, emptyCard }) => {
+    const [show, setShow] = useState(stateShowModalCreate);
+    let [item, setItem] = useState(emptyCard);
+
+    useEffect(() => {
+        setShow(stateShowModalCreate);
+    }, [setShow, stateShowModalCreate]);
+
+    const handleClose = () => {
+        showModalCreate(false);
+        setShow(false);
+        setItem({ ...emptyCard });
+    };
+
+    const handlerChangeInput = (event) => {
+        setItem({ ...item, [event.target.name]: event.target.value });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        createPost(item);
+        handleClose();
+    };
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-            </Button>
-
             <Modal show={show} onHide={handleClose} size="lg" centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Form onSubmit={handleSubmit}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Item</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         <Form.Group controlId="postImg">
-                            <Form.Label>Email address</Form.Label>
+                            <Form.Label>Image URL</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter image url"
+                                name="postImg"
+                                value={item.postImg}
+                                onChange={handlerChangeInput}
                             />
                             <Form.Text className="text-muted">
                                 You must enter a valid image URL
@@ -32,33 +53,60 @@ export default () => {
 
                         <Form.Group controlId="postTitle">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" placeholder="Title" />
+                            <Form.Control
+                                type="text"
+                                placeholder="Title"
+                                name="postTitle"
+                                value={item.postTitle}
+                                onChange={handlerChangeInput}
+                            />
                         </Form.Group>
 
                         <Form.Group controlId="postPrice">
                             <Form.Label>Price</Form.Label>
-                            <Form.Control type="number" placeholder="Price" />
+                            <Form.Control
+                                type="number"
+                                placeholder="Price"
+                                name="postPrice"
+                                value={item.postPrice}
+                                onChange={handlerChangeInput}
+                            />
                         </Form.Group>
 
                         <Form.Group controlId="postDescription">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                placeholder="Description"
+                                name="postDescription"
+                                value={item.postDescription}
+                                onChange={handlerChangeInput}
+                            />
                         </Form.Group>
-
-                        <Button variant="primary" type="submit">
-                            Submit
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
                         </Button>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
+                        <Button variant="primary" type="submit">
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </>
     );
 };
+
+const mapStateToProps = (state) => ({
+    stateShowModalCreate: state.cards.showModalCreate,
+    emptyCard: state.cards.emptyCard,
+});
+
+const mapDispatchToProps = {
+    showModalCreate,
+    createPost,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard);

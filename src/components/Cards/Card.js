@@ -27,10 +27,24 @@ const OneCard = ({ post, updatePost }) => {
         },
     ); */
     let [item, setItem] = useState(post);
-    console.log('post: ', post);
-    console.log('item: ', item);
+    // console.log('post: ', post);
+    // console.log('item: ', item);
 
-    const handleShowEdit = () => setIsEdit(true);
+    const findAncestor = (el, cls) => {
+        while ((el = el.parentElement) && !el.classList.contains(cls));
+        return el;
+    };
+
+    const handleShowEdit = (event) => {
+        const elem = event.target;
+        const cardBody = findAncestor(elem, 'card-body');
+        cardBody.scrollIntoView({
+            block: 'center',
+            behavior: 'smooth',
+        });
+
+        setIsEdit(true);
+    };
     const handleShowView = () => {
         setItem({ ...post });
         setIsEdit(false);
