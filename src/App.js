@@ -1,6 +1,7 @@
 import './scss/App.scss';
 
 import Cards from './components/Cards/Cards';
+import { Container } from 'react-bootstrap';
 import Header from './components/Header/Header';
 import React from 'react';
 
@@ -9,10 +10,10 @@ function App() {
         <>
             <Header />
 
-            <section className="container">
-                <div className="row">
+            <section className="after-header">
+                <Container>
                     <Cards />
-                </div>
+                </Container>
             </section>
         </>
     );

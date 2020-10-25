@@ -1,3 +1,7 @@
-@import './_bootstrap';
-// @import "bootstrap/scss/bootstrap";
+// @import './_bootstrap';
+@import "bootstrap/scss/bootstrap";
 @import './_components';
+
+.after-header {
+    margin-top: 58px;
+}
