@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 import {
     CREATE_POST,
     DELETE_POST,
@@ -29,6 +31,12 @@ const initState = {
         postPrice: 0,
         postDescription: '',
     },
+    validationSchema: yup.object({
+        postImg: yup.string().required(),
+        postTitle: yup.string().required(),
+        postPrice: yup.number().required().positive().integer(),
+        postDescription: yup.string().required(),
+    }),
 };
 
 const random = (max) => Math.floor(Math.random() * Math.floor(max));
@@ -43,7 +51,7 @@ export const cardsReducer = (state = initState, action) => {
                 postPrice: random(100),
                 postDescription: item.body,
             }));
-            
+
             return {
                 ...state,
                 cards: state.cards.concat(payload),
