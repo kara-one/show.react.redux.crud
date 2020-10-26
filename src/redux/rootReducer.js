@@ -1,6 +1,6 @@
-import { cardsReducer } from './cardsReducer';
 import { combineReducers } from 'redux';
+import { recipesReducer } from './recipesReducer';
 
 export const rootReducer = combineReducers({
-    cards: cardsReducer,
+    recipes: recipesReducer,
 });

@@ -1,32 +1,36 @@
 import { Button, Modal } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import { deletePost, idItemDelete, showModalDelete } from '../../redux/actions';
+import {
+    deleteRecipe,
+    setIdItemDelete,
+    showModalDelete,
+} from '../../redux/actions';
 
 import { connect } from 'react-redux';
 
-const DeleteCard = ({
-    __idItemDelete,
-    stateShowModalDelete,
+const DeleteRecipe = ({
     idItemDelete,
+    stateModalDelete,
+    setIdItemDelete,
     showModalDelete,
-    deletePost,
+    deleteRecipe,
 }) => {
-    const [show, setShow] = useState(stateShowModalDelete);
+    const [show, setShow] = useState(stateModalDelete);
 
     useEffect(() => {
-        setShow(stateShowModalDelete);
-    }, [setShow, stateShowModalDelete]);
+        setShow(stateModalDelete);
+    }, [setShow, stateModalDelete]);
 
     const handleClose = () => {
         showModalDelete(false);
-        idItemDelete(0);
+        setIdItemDelete(0);
         setShow(false);
     };
 
     const handleDelete = () => {
-        deletePost(__idItemDelete);
+        deleteRecipe(idItemDelete);
         showModalDelete(false);
-        idItemDelete(0);
+        setIdItemDelete(0);
         setShow(false);
     };
 
@@ -40,7 +44,7 @@ const DeleteCard = ({
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete Item</Modal.Title>
+                    <Modal.Title>Delete Recipe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="bg-warning">
                     <div className="delete-confirm__message text-danger text-center text-uppercase display-4">
@@ -48,7 +52,9 @@ const DeleteCard = ({
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={handleDelete}>YES</Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                        YES
+                    </Button>
                     <Button variant="secondary" onClick={handleClose}>
                         NO
                     </Button>
@@ -59,14 +65,14 @@ const DeleteCard = ({
 };
 
 const mapStateToProps = (state) => ({
-    stateShowModalDelete: state.cards.showModalDelete,
-    __idItemDelete: state.cards.idItemDelete,
+    stateModalDelete: state.recipes.stateModalDelete,
+    idItemDelete: state.recipes.idItemDelete,
 });
 
 const mapDispatchToProps = {
-    idItemDelete,
+    setIdItemDelete,
     showModalDelete,
-    deletePost,
+    deleteRecipe,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteCard);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteRecipe);

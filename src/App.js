@@ -1,9 +1,9 @@
 import './scss/App.scss';
 
-import Cards from './components/Cards/Cards';
 import { Container } from 'react-bootstrap';
 import Header from './components/Header/Header';
 import React from 'react';
+import Recipes from './components/Recipes/Recipes';
 
 function App() {
     return (
@@ -12,7 +12,7 @@ function App() {
 
             <section className="after-header">
                 <Container>
-                    <Cards />
+                    <Recipes />
                 </Container>
             </section>
         </>

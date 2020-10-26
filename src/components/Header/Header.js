@@ -1,12 +1,12 @@
 import './Header.scss';
 
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { fetchedPosts, showModalCreate } from '../../redux/actions';
+import { fetchedRecipes, showModalCreate } from '../../redux/actions';
 
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Header = ({ showModalCreate, fetchedPosts }) => {
+const Header = ({ showModalCreate, fetchedRecipes }) => {
     const handleShowModal = (event) => {
         event.preventDefault();
 
@@ -15,7 +15,8 @@ const Header = ({ showModalCreate, fetchedPosts }) => {
 
     const handleFetch = (event) => {
         event.preventDefault();
-        fetchedPosts();
+
+        fetchedRecipes();
     };
 
     return (
@@ -50,7 +51,7 @@ const Header = ({ showModalCreate, fetchedPosts }) => {
                             className="btn btn-danger btn-add"
                             onClick={handleShowModal}
                         >
-                            Add Item
+                            RECIPE ADD
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
@@ -61,7 +62,7 @@ const Header = ({ showModalCreate, fetchedPosts }) => {
 
 const mapDispatchToProps = {
     showModalCreate,
-    fetchedPosts,
+    fetchedRecipes,
 };
 
 export default connect(null, mapDispatchToProps)(Header);

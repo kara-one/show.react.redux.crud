@@ -1,4 +1,4 @@
-import './Card.scss';
+import './Recipe.scss';
 
 import {
     Button,
@@ -11,9 +11,9 @@ import {
 } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import {
-    idItemDelete,
+    setIdItemDelete,
     showModalDelete,
-    updatePost,
+    updateRecipe,
 } from '../../redux/actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,43 +21,41 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const OneCard = ({
-    post,
-    updatePost,
+const Recipe = ({
+    recipe,
+    updateRecipe,
     showModalDelete,
-    idItemDelete,
-    validationSchema,
+    setIdItemDelete,
+    validationRecipe,
 }) => {
     const [isEdit, setIsEdit] = useState(false);
     /** let [item, setItem] = useState(
         {
-            postId: post,
-            postImg: `/images/${post}.jpg`,
-            postTitle: `Recipe Number-${post}`,
-            postPrice: post,
-            postDescription: `Some quick example text to build on the card title and make up the bulk of the card's content.${post}`,
+            recipeId: recipe,
+            recipeImg: `/images/${recipe}.jpg`,
+            recipeTitle: `Recipe Number-${recipe}`,
+            recipePrice: recipe,
+            recipeDescription: `Some quick example text to build on the card title and make up the bulk of the card's content.${recipe}`,
         },
     ); */
-    let [item, setItem] = useState(post);
+    let [item, setItem] = useState(recipe);
     useEffect(() => {
-        setItem(post);
-    }, [setItem, post]);
-    // console.log('post: ', post);
+        setItem(recipe);
+    }, [setItem, recipe]);
+    // console.log('recipe: ', recipe);
     // console.log('item: ', item);
-
-    const schema = validationSchema;
 
     const handleShowEdit = (event) => {
         setIsEdit(true);
     };
     const handleShowView = () => {
-        setItem({ ...post });
+        setItem({ ...recipe });
         setIsEdit(false);
     };
     const handleShowDelete = (event) => {
         event.preventDefault();
 
-        idItemDelete(item.postId);
+        setIdItemDelete(item.recipeId);
         showModalDelete(true);
     };
 
@@ -65,10 +63,10 @@ const OneCard = ({
         <Col xs={12} md={6} lg={4} className="mt-3">
             <Card border="info">
                 <Formik
-                    validationSchema={schema}
+                    validationSchema={validationRecipe}
                     initialValues={item}
                     onSubmit={(values, { setSubmitting }) => {
-                        updatePost(values);
+                        updateRecipe(values);
                         setIsEdit(false);
                         setSubmitting(false);
                     }}
@@ -83,83 +81,85 @@ const OneCard = ({
                         errors,
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                            <Card.Img variant="top" src={item.postImg} />
+                            <Card.Img variant="top" src={item.recipeImg} />
 
                             <Card.Body>
                                 <Collapse in={isEdit}>
-                                    <Form.Group controlId="postImg">
+                                    <Form.Group controlId="recipeImg">
                                         <Form.Control
                                             type="text"
                                             placeholder="Enter image url"
-                                            name="postImg"
-                                            value={values.postImg}
+                                            name="recipeImg"
+                                            value={values.recipeImg}
                                             onChange={handleChange}
-                                            isInvalid={!!errors.postImg}
+                                            isInvalid={!!errors.recipeImg}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.postImg}
+                                            {errors.recipeImg}
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Collapse>
 
                                 <Collapse in={!isEdit}>
-                                    <Card.Title>{item.postTitle}</Card.Title>
+                                    <Card.Title>{item.recipeTitle}</Card.Title>
                                 </Collapse>
                                 <Collapse in={isEdit}>
-                                    <Form.Group controlId="postTitle">
+                                    <Form.Group controlId="recipeTitle">
                                         <Form.Control
                                             type="text"
                                             placeholder="Title"
-                                            name="postTitle"
-                                            value={values.postTitle}
+                                            name="recipeTitle"
+                                            value={values.recipeTitle}
                                             onChange={handleChange}
-                                            isInvalid={!!errors.postTitle}
+                                            isInvalid={!!errors.recipeTitle}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.postTitle}
+                                            {errors.recipeTitle}
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Collapse>
 
                                 <Collapse in={!isEdit}>
                                     <Card.Subtitle>
-                                        Price: ${item.postPrice}
+                                        Price: ${item.recipePrice}
                                     </Card.Subtitle>
                                 </Collapse>
                                 <Collapse in={isEdit}>
-                                    <Form.Group controlId="postPrice">
+                                    <Form.Group controlId="recipePrice">
                                         <Form.Control
                                             type="number"
                                             placeholder="Price"
-                                            name="postPrice"
-                                            value={values.postPrice}
+                                            name="recipePrice"
+                                            value={values.recipePrice}
                                             onChange={handleChange}
-                                            isInvalid={!!errors.postPrice}
+                                            isInvalid={!!errors.recipePrice}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.postPrice}
+                                            {errors.recipePrice}
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Collapse>
 
                                 <Collapse in={!isEdit}>
                                     <Card.Text>
-                                        {item.postDescription}
+                                        {item.recipeDescription}
                                     </Card.Text>
                                 </Collapse>
                                 <Collapse in={isEdit}>
-                                    <Form.Group controlId="postDescription">
+                                    <Form.Group controlId="recipeDescription">
                                         <Form.Control
                                             as="textarea"
                                             rows={3}
                                             placeholder="Description"
-                                            name="postDescription"
-                                            value={values.postDescription}
+                                            name="recipeDescription"
+                                            value={values.recipeDescription}
                                             onChange={handleChange}
-                                            isInvalid={!!errors.postDescription}
+                                            isInvalid={
+                                                !!errors.recipeDescription
+                                            }
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {errors.postDescription}
+                                            {errors.recipeDescription}
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Collapse>
@@ -234,13 +234,13 @@ const OneCard = ({
 };
 
 const mapStateToProps = (state) => ({
-    validationSchema: state.cards.validationSchema,
+    validationRecipe: state.recipes.validationRecipe,
 });
 
 const mapDispatchToProps = {
-    updatePost,
-    idItemDelete,
+    updateRecipe,
+    setIdItemDelete,
     showModalDelete,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OneCard);
+export default connect(mapStateToProps, mapDispatchToProps)(Recipe);

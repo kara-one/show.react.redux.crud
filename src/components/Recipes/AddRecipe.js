@@ -1,40 +1,38 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import { createPost, showModalCreate } from '../../redux/actions';
+import { createRecipe, showModalCreate } from '../../redux/actions';
 
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 
-const AddCard = ({
-    stateShowModalCreate,
+const AddRecipe = ({
+    stateModalCreate,
     showModalCreate,
-    createPost,
-    emptyCard,
-    validationSchema,
+    createRecipe,
+    emptyRecipe,
+    validationRecipe,
 }) => {
-    const [show, setShow] = useState(stateShowModalCreate);
-    let [item, setItem] = useState(emptyCard);
+    const [show, setShow] = useState(stateModalCreate);
+    let [item, setItem] = useState(emptyRecipe);
 
     useEffect(() => {
-        setShow(stateShowModalCreate);
-    }, [setShow, stateShowModalCreate]);
-
-    const schema = validationSchema;
+        setShow(stateModalCreate);
+    }, [setShow, stateModalCreate]);
 
     const handleClose = () => {
         showModalCreate(false);
         setShow(false);
-        setItem({ ...emptyCard });
+        setItem({ ...emptyRecipe });
     };
 
     return (
         <>
             <Modal show={show} onHide={handleClose} size="lg" centered>
                 <Formik
-                    validationSchema={schema}
+                    validationSchema={validationRecipe}
                     initialValues={item}
                     onSubmit={(values, { setSubmitting }) => {
-                        createPost(values);
+                        createRecipe(values);
                         handleClose();
                         setSubmitting(false);
                     }}
@@ -53,67 +51,67 @@ const AddCard = ({
                                 <Modal.Title>Add Item</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <Form.Group controlId="postImg">
+                                <Form.Group controlId="recipeImg">
                                     <Form.Label>Image URL</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter image url"
-                                        name="postImg"
-                                        value={values.postImg}
+                                        name="recipeImg"
+                                        value={values.recipeImg}
                                         onChange={handleChange}
-                                        isInvalid={!!errors.postImg}
+                                        isInvalid={!!errors.recipeImg}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.postImg}
+                                        {errors.recipeImg}
                                     </Form.Control.Feedback>
                                     <Form.Text className="text-muted">
                                         You must enter a valid image URL
                                     </Form.Text>
                                 </Form.Group>
 
-                                <Form.Group controlId="postTitle">
+                                <Form.Group controlId="recipeTitle">
                                     <Form.Label>Title</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Title"
-                                        name="postTitle"
-                                        value={values.postTitle}
+                                        name="recipeTitle"
+                                        value={values.recipeTitle}
                                         onChange={handleChange}
-                                        isInvalid={!!errors.postTitle}
+                                        isInvalid={!!errors.recipeTitle}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.postTitle}
+                                        {errors.recipeTitle}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group controlId="postPrice">
+                                <Form.Group controlId="recipePrice">
                                     <Form.Label>Price</Form.Label>
                                     <Form.Control
                                         type="number"
                                         placeholder="Price"
-                                        name="postPrice"
-                                        value={values.postPrice}
+                                        name="recipePrice"
+                                        value={values.recipePrice}
                                         onChange={handleChange}
-                                        isInvalid={!!errors.postPrice}
+                                        isInvalid={!!errors.recipePrice}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.postPrice}
+                                        {errors.recipePrice}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group controlId="postDescription">
+                                <Form.Group controlId="recipeDescription">
                                     <Form.Label>Description</Form.Label>
                                     <Form.Control
                                         as="textarea"
                                         rows={3}
                                         placeholder="Description"
-                                        name="postDescription"
-                                        value={values.postDescription}
+                                        name="recipeDescription"
+                                        value={values.recipeDescription}
                                         onChange={handleChange}
-                                        isInvalid={!!errors.postDescription}
+                                        isInvalid={!!errors.recipeDescription}
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.postDescription}
+                                        {errors.recipeDescription}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Modal.Body>
@@ -137,14 +135,14 @@ const AddCard = ({
 };
 
 const mapStateToProps = (state) => ({
-    stateShowModalCreate: state.cards.showModalCreate,
-    emptyCard: state.cards.emptyCard,
-    validationSchema: state.cards.validationSchema,
+    stateModalCreate: state.recipes.stateModalCreate,
+    emptyRecipe: state.recipes.emptyRecipe,
+    validationRecipe: state.recipes.validationRecipe,
 });
 
 const mapDispatchToProps = {
     showModalCreate,
-    createPost,
+    createRecipe,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCard);
+export default connect(mapStateToProps, mapDispatchToProps)(AddRecipe);
