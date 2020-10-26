@@ -2,7 +2,7 @@ import './Cards.scss';
 
 import AddCard from './AddCard';
 import Card from './Card';
-import { CardColumns } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import DeleteCard from './DeleteCard';
 import React from 'react';
 import { connect } from "react-redux";
@@ -18,11 +18,11 @@ const Cards = ({ syncCards }) => {
 
     return (
         <>
-            <CardColumns>
+            <Row>
                 {syncCards.map((post) => (
                     <Card post={post} key={post.postId} />
                 ))}
-            </CardColumns>
+            </Row>
 
             <AddCard />
             <DeleteCard />

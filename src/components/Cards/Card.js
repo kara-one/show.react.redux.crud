@@ -5,6 +5,7 @@ import {
     ButtonGroup,
     ButtonToolbar,
     Card,
+    Col,
     Collapse,
     Form,
 } from 'react-bootstrap';
@@ -30,19 +31,7 @@ const OneCard = ({ post, updatePost, showModalDelete, idItemDelete }) => {
     // console.log('post: ', post);
     // console.log('item: ', item);
 
-    const findAncestor = (el, cls) => {
-        while ((el = el.parentElement) && !el.classList.contains(cls));
-        return el;
-    };
-
     const handleShowEdit = (event) => {
-        const elem = event.target;
-        const cardBody = findAncestor(elem, 'card-body');
-        cardBody.scrollIntoView({
-            block: 'center',
-            behavior: 'smooth',
-        });
-
         setIsEdit(true);
     };
     const handleShowView = () => {
@@ -68,126 +57,132 @@ const OneCard = ({ post, updatePost, showModalDelete, idItemDelete }) => {
     };
 
     return (
-        <Card border="info">
-            <Form onSubmit={handleSubmit}>
-                <Card.Img variant="top" src={item.postImg} />
+        <Col xs={12} md={6} lg={4} className="mt-3">
+            <Card border="info">
+                <Form onSubmit={handleSubmit}>
+                    <Card.Img variant="top" src={item.postImg} />
 
-                <Card.Body>
-                    <Collapse in={isEdit}>
-                        <Form.Group controlId="postImg">
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter image url"
-                                name="postImg"
-                                value={item.postImg}
-                                onChange={handlerChangeInput}
-                            />
-                        </Form.Group>
-                    </Collapse>
-
-                    <Collapse in={!isEdit}>
-                        <Card.Title>{item.postTitle}</Card.Title>
-                    </Collapse>
-                    <Collapse in={isEdit}>
-                        <Form.Group controlId="postTitle">
-                            <Form.Control
-                                type="text"
-                                placeholder="Title"
-                                name="postTitle"
-                                value={item.postTitle}
-                                onChange={handlerChangeInput}
-                            />
-                        </Form.Group>
-                    </Collapse>
-
-                    <Collapse in={!isEdit}>
-                        <Card.Subtitle>Price: ${item.postPrice}</Card.Subtitle>
-                    </Collapse>
-                    <Collapse in={isEdit}>
-                        <Form.Group controlId="postPrice">
-                            <Form.Control
-                                type="number"
-                                placeholder="Price"
-                                name="postPrice"
-                                value={item.postPrice}
-                                onChange={handlerChangeInput}
-                            />
-                        </Form.Group>
-                    </Collapse>
-
-                    <Collapse in={!isEdit}>
-                        <Card.Text>{item.postDescription}</Card.Text>
-                    </Collapse>
-                    <Collapse in={isEdit}>
-                        <Form.Group controlId="postDescription">
-                            <Form.Control
-                                as="textarea"
-                                rows={3}
-                                placeholder="Description"
-                                name="postDescription"
-                                value={item.postDescription}
-                                onChange={handlerChangeInput}
-                            />
-                        </Form.Group>
-                    </Collapse>
-
-                    <ButtonToolbar
-                        className="flex-column"
-                        aria-label="Toolbar with Button groups"
-                    >
-                        <Collapse in={!isEdit}>
-                            <ButtonGroup
-                                className="justify-content-between"
-                                aria-label="View page Button group"
-                            >
-                                <Button
-                                    onClick={handleShowEdit}
-                                    variant="light"
-                                    size="lg"
-                                    aria-label="Edit"
-                                    block
-                                >
-                                    Edit
-                                </Button>
-                            </ButtonGroup>
-                        </Collapse>
-
+                    <Card.Body>
                         <Collapse in={isEdit}>
-                            <ButtonGroup
-                                className="justify-content-between"
-                                aria-label="Edit page Button group"
-                            >
-                                <Button
-                                    onClick={handleShowDelete}
-                                    variant="danger"
-                                    size="lg"
-                                    aria-label="Delete"
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </Button>
-                                <Button
-                                    variant="secondary"
-                                    type="submit"
-                                    size="lg"
-                                    aria-label="Upgrate"
-                                >
-                                    Upgrate
-                                </Button>
-                                <Button
-                                    onClick={handleShowView}
-                                    variant="light"
-                                    className="close btn-close"
-                                    size="lg"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </Button>
-                            </ButtonGroup>
+                            <Form.Group controlId="postImg">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter image url"
+                                    name="postImg"
+                                    value={item.postImg}
+                                    onChange={handlerChangeInput}
+                                />
+                            </Form.Group>
                         </Collapse>
-                    </ButtonToolbar>
-                </Card.Body>
-            </Form>
-        </Card>
+
+                        <Collapse in={!isEdit}>
+                            <Card.Title>{item.postTitle}</Card.Title>
+                        </Collapse>
+                        <Collapse in={isEdit}>
+                            <Form.Group controlId="postTitle">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Title"
+                                    name="postTitle"
+                                    value={item.postTitle}
+                                    onChange={handlerChangeInput}
+                                />
+                            </Form.Group>
+                        </Collapse>
+
+                        <Collapse in={!isEdit}>
+                            <Card.Subtitle>
+                                Price: ${item.postPrice}
+                            </Card.Subtitle>
+                        </Collapse>
+                        <Collapse in={isEdit}>
+                            <Form.Group controlId="postPrice">
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Price"
+                                    name="postPrice"
+                                    value={item.postPrice}
+                                    onChange={handlerChangeInput}
+                                />
+                            </Form.Group>
+                        </Collapse>
+
+                        <Collapse in={!isEdit}>
+                            <Card.Text>{item.postDescription}</Card.Text>
+                        </Collapse>
+                        <Collapse in={isEdit}>
+                            <Form.Group controlId="postDescription">
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Description"
+                                    name="postDescription"
+                                    value={item.postDescription}
+                                    onChange={handlerChangeInput}
+                                />
+                            </Form.Group>
+                        </Collapse>
+                    </Card.Body>
+
+                    <Card.Footer>
+                        <ButtonToolbar
+                            className="flex-column"
+                            aria-label="Toolbar with Button groups"
+                        >
+                            <Collapse in={!isEdit}>
+                                <ButtonGroup
+                                    className="justify-content-between"
+                                    aria-label="View page Button group"
+                                >
+                                    <Button
+                                        onClick={handleShowEdit}
+                                        variant="light"
+                                        size="lg"
+                                        aria-label="Edit"
+                                        block
+                                    >
+                                        Edit
+                                    </Button>
+                                </ButtonGroup>
+                            </Collapse>
+
+                            <Collapse in={isEdit}>
+                                <ButtonGroup
+                                    className="justify-content-between"
+                                    aria-label="Edit page Button group"
+                                >
+                                    <Button
+                                        onClick={handleShowDelete}
+                                        variant="danger"
+                                        size="lg"
+                                        aria-label="Delete"
+                                    >
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </Button>
+                                    <Button
+                                        variant="secondary"
+                                        type="submit"
+                                        size="lg"
+                                        aria-label="Upgrate"
+                                    >
+                                        Upgrate
+                                    </Button>
+                                    <Button
+                                        onClick={handleShowView}
+                                        variant="light"
+                                        className="close btn-close"
+                                        size="lg"
+                                        aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </Button>
+                                </ButtonGroup>
+                            </Collapse>
+                        </ButtonToolbar>
+                    </Card.Footer>
+                </Form>
+            </Card>
+        </Col>
     );
 };
 /* 
