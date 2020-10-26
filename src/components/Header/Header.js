@@ -1,16 +1,21 @@
 import './Header.scss';
 
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { fetchedPosts, showModalCreate } from '../../redux/actions';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModalCreate } from '../../redux/actions';
 
-const Header = ({ showModalCreate }) => {
+const Header = ({ showModalCreate, fetchedPosts }) => {
     const handleShowModal = (event) => {
         event.preventDefault();
 
         showModalCreate(true);
+    };
+
+    const handleFetch = (event) => {
+        event.preventDefault();
+        fetchedPosts();
     };
 
     return (
@@ -37,6 +42,9 @@ const Header = ({ showModalCreate }) => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
+                        <Nav.Link href="#fetch" onClick={handleFetch}>
+                            Fetch
+                        </Nav.Link>
                     </Nav>
                     <Nav>
                         <Nav.Link
@@ -55,6 +63,7 @@ const Header = ({ showModalCreate }) => {
 
 const mapDispatchToProps = {
     showModalCreate,
+    fetchedPosts,
 };
 
 export default connect(null, mapDispatchToProps)(Header);

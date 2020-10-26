@@ -1,6 +1,7 @@
 import {
     CREATE_POST,
     DELETE_POST,
+    FETCHED_POSTS,
     ID_ITEM_DELETE,
     SHOW_MODAL_CREATE,
     SHOW_MODAL_DELETE,
@@ -11,6 +12,7 @@ const initState = {
     showModalCreate: false,
     showModalDelete: false,
     idItemDelete: 0,
+    fetchedPosts: [],
     cards: [...Array(10)].map((item, index) => ({
         postId: (index + Date.now()).toString(),
         postImg: `/images/${index + 1}.jpg`,
@@ -29,8 +31,23 @@ const initState = {
     },
 };
 
+const random = (max) => Math.floor(Math.random() * Math.floor(max));
+
 export const cardsReducer = (state = initState, action) => {
     switch (action.type) {
+        case FETCHED_POSTS:
+            const payload = action.payload.map((item) => ({
+                postId: (item.id + Date.now()).toString(),
+                postImg: `/images/${random(10)}.jpg`,
+                postTitle: item.title,
+                postPrice: random(100),
+                postDescription: item.body,
+            }));
+            
+            return {
+                ...state,
+                cards: state.cards.concat(payload),
+            };
         case CREATE_POST:
             return {
                 ...state,
@@ -49,8 +66,8 @@ export const cardsReducer = (state = initState, action) => {
         case DELETE_POST:
             return {
                 ...state,
-                cards: state.cards.filter((item) =>
-                    item.postId !== action.payload
+                cards: state.cards.filter(
+                    (item) => item.postId !== action.payload,
                 ),
             };
         case SHOW_MODAL_CREATE:
