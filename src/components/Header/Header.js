@@ -30,12 +30,10 @@ const Header = ({ showModalCreate, fetchedPosts }) => {
                 <Navbar.Brand href="#home">
                     <img
                         alt=""
-                        src="/logo.svg"
-                        width="30"
-                        height="30"
+                        src="/logo.png"
                         className="d-inline-block align-top"
                     />{' '}
-                    CRUD
+                    CRUD RECIPES
                 </Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
