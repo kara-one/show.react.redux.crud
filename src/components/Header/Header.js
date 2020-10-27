@@ -1,12 +1,12 @@
 import './Header.scss';
 
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { fetchedRecipes, showModalCreate } from '../../redux/actions';
+import { fetchRecipes, showModalCreate } from '../../redux/actions';
 
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Header = ({ showModalCreate, fetchedRecipes }) => {
+const Header = ({ showModalCreate, fetchRecipes }) => {
     const handleShowModal = (event) => {
         event.preventDefault();
 
@@ -16,7 +16,7 @@ const Header = ({ showModalCreate, fetchedRecipes }) => {
     const handleFetch = (event) => {
         event.preventDefault();
 
-        fetchedRecipes();
+        fetchRecipes();
     };
 
     return (
@@ -62,7 +62,7 @@ const Header = ({ showModalCreate, fetchedRecipes }) => {
 
 const mapDispatchToProps = {
     showModalCreate,
-    fetchedRecipes,
+    fetchRecipes,
 };
 
 export default connect(null, mapDispatchToProps)(Header);

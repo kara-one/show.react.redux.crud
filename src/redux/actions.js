@@ -8,14 +8,16 @@ import {
     UPDATE_RECIPE,
 } from './types';
 
-export function fetchedRecipes() {
+export function fetchRecipes(el) {
+    console.log('el: ', el);
     return async (dispatch) => {
         // &_page=XX
         const responce = await fetch(
             'https://jsonplaceholder.typicode.com/posts?_limit=5',
         );
         const json = await responce.json();
-        
+
+        // console.log('json: ', json);
         dispatch({ type: FETCHED_RECIPES, payload: json });
     };
 }

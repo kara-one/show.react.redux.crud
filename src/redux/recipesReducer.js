@@ -47,14 +47,14 @@ export const recipesReducer = (state = initState, action) => {
             const payload = action.payload.map((item) => ({
                 recipeId: (item.id + Date.now()).toString(),
                 recipeImg: `/images/${random(10)}.jpg`,
-                recipeTitle: item.title,
+                recipeTitle: `#${item.id}: ${item.title}`,
                 recipePrice: random(100),
                 recipeDescription: item.body,
             }));
 
             return {
                 ...state,
-                staticRecipes: state.staticRecipes.concat(payload),
+                fetchedRecipes: state.fetchedRecipes.concat(payload),
             };
         case CREATE_RECIPE:
             return {
