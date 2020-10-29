@@ -1,24 +1,19 @@
 import {
+    CHANGE_LOADING_RECIPES,
     CREATE_RECIPE,
     DELETE_RECIPE,
-    FETCHED_RECIPES,
     ID_ITEM_DELETE,
+    PAGE_RECIPES,
+    REQUEST_POSTS,
     STATE_MODAL_CREATE,
     STATE_MODAL_DELETE,
     UPDATE_RECIPE,
 } from './types';
 
-export function fetchRecipes(el) {
-    console.log('el: ', el);
-    return async (dispatch) => {
-        // &_page=XX
-        const responce = await fetch(
-            'https://jsonplaceholder.typicode.com/posts?_limit=5',
-        );
-        const json = await responce.json();
-
-        // console.log('json: ', json);
-        dispatch({ type: FETCHED_RECIPES, payload: json });
+export function fetchRecipes(page) {    
+    return {
+        type: REQUEST_POSTS,
+        page: page
     };
 }
 
@@ -43,23 +38,36 @@ export function deleteRecipe(recipeId) {
     };
 }
 
-export function showModalCreate(state) {
+export function showModalCreate(status) {
     return {
         type: STATE_MODAL_CREATE,
-        payload: state,
+        payload: status,
     };
 }
 
-export function showModalDelete(state) {
+export function showModalDelete(status) {
     return {
         type: STATE_MODAL_DELETE,
-        payload: state,
+        payload: status,
     };
 }
 
-export function setIdItemDelete(state) {
+export function setIdItemDelete(status) {
     return {
         type: ID_ITEM_DELETE,
-        payload: state,
+        payload: status,
+    };
+}
+
+export function changeLoadingRecipes(status) {
+    return {
+        type: CHANGE_LOADING_RECIPES,
+        payload: status,
+    };
+}
+
+export function incrementPageRecipes() {
+    return {
+        type: PAGE_RECIPES,
     };
 }

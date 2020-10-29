@@ -1,10 +1,12 @@
 import * as yup from 'yup';
 
 import {
+    CHANGE_LOADING_RECIPES,
     CREATE_RECIPE,
     DELETE_RECIPE,
     FETCHED_RECIPES,
     ID_ITEM_DELETE,
+    PAGE_RECIPES,
     STATE_MODAL_CREATE,
     STATE_MODAL_DELETE,
     UPDATE_RECIPE,
@@ -13,6 +15,8 @@ import {
 const initState = {
     stateModalCreate: false,
     stateModalDelete: false,
+    stateLoadingRecipes: false,
+    pageRecipes: 1,
     idItemDelete: 0,
     fetchedRecipes: [],
     staticRecipes: [...Array(10)].map((item, index) => ({
@@ -59,13 +63,13 @@ export const recipesReducer = (state = initState, action) => {
         case CREATE_RECIPE:
             return {
                 ...state,
-                staticRecipes: state.staticRecipes.concat(action.payload),
-                // staticRecipes: [...state.staticRecipes, action.payload]
+                fetchedRecipes: state.fetchedRecipes.concat(action.payload),
+                // fetchedRecipes: [...state.fetchedRecipes, action.payload]
             };
         case UPDATE_RECIPE:
             return {
                 ...state,
-                staticRecipes: state.staticRecipes.map((item) =>
+                fetchedRecipes: state.fetchedRecipes.map((item) =>
                     item.recipeId === action.payload.recipeId
                         ? action.payload
                         : item,
@@ -74,7 +78,7 @@ export const recipesReducer = (state = initState, action) => {
         case DELETE_RECIPE:
             return {
                 ...state,
-                staticRecipes: state.staticRecipes.filter(
+                fetchedRecipes: state.fetchedRecipes.filter(
                     (item) => item.recipeId !== action.payload,
                 ),
             };
@@ -92,6 +96,16 @@ export const recipesReducer = (state = initState, action) => {
             return {
                 ...state,
                 idItemDelete: action.payload,
+            };
+        case CHANGE_LOADING_RECIPES:
+            return {
+                ...state,
+                stateLoadingRecipes: action.payload,
+            };
+        case PAGE_RECIPES:
+            return {
+                ...state,
+                pageRecipes: state.pageRecipes + 1,
             };
         default:
             return state;
