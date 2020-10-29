@@ -1,47 +1,77 @@
 import './Recipes.scss';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AddRecipe from './AddRecipe';
 import DeleteRecipe from './DeleteRecipe';
 import Recipe from './Recipe';
 import { Row } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import SkeletonRecipe from './skeletonRecipe';
 import { fetchRecipes } from '../../redux/actions';
 
-const Recipes = ({ syncRecipes }) => {
-    window.onload = function () {
-        const fr = fetchRecipes(5);
-        console.log('fr: ', fr);
-    };
+export default () => {
+    const dispatch = useDispatch();
+
+    const syncRecipes = useSelector((state) => state.recipes.fetchedRecipes);
+    const pageRecipes = useSelector((state) => state.recipes.pageRecipes);
+
+    let [pageHeight, setPageHeight] = useState(0);
+
+    let [loading, setLoading] = useState(false);
 
     let [recipes, setRecipes] = useState(syncRecipes);
-
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    console.log('result: ', result);
-                },
-                // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-                // чтобы не перехватывать исключения из ошибок в самих компонентах.
-                (error) => {
-                    console.log('error: ', error);
-                },
-            );
-
         setRecipes(syncRecipes);
     }, [setRecipes, syncRecipes]);
 
-    console.log('syncRecipes: ', syncRecipes);
-    console.log('recipes: ', recipes);
+    let [pages, setPages] = useState(pageRecipes);
+    useEffect(() => {
+        setPages(pageRecipes);
+    }, [setPages, pageRecipes]);
+
+    window.onload = function () {
+        dispatch(fetchRecipes(pages));
+    };
+
+    let handleScroll = useCallback(() => {
+        const scrollHeight = Math.max(
+            document.body.scrollHeight,
+            document.documentElement.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.offsetHeight,
+            document.body.clientHeight,
+            document.documentElement.clientHeight,
+        );
+        const windowHeight =
+            document.documentElement.clientHeight + window.scrollY;
+        const isPageEnd = scrollHeight - 100 < windowHeight;
+
+        if (pageHeight === 0 || (loading && pageHeight !== scrollHeight)) {
+            setLoading(false);
+            setPageHeight(scrollHeight);
+        }
+
+        if (isPageEnd && !loading && pageHeight === scrollHeight) {
+            setLoading(true);
+            dispatch(fetchRecipes(pages));
+        }
+    }, [pages, dispatch, loading, pageHeight]);
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [handleScroll]);
 
     if (!recipes.length) {
         return (
-            <div className="alert alert-info col-12" role="alert">
-                No Recipes
-            </div>
+            <>
+                <Row>
+                    <SkeletonRecipe />
+                    <SkeletonRecipe />
+                    <SkeletonRecipe />
+                </Row>
+            </>
         );
     }
 
@@ -51,6 +81,8 @@ const Recipes = ({ syncRecipes }) => {
                 {recipes.map((recipe) => (
                     <Recipe recipe={recipe} key={recipe.recipeId} />
                 ))}
+
+                <SkeletonRecipe />
             </Row>
 
             <AddRecipe />
@@ -58,13 +90,3 @@ const Recipes = ({ syncRecipes }) => {
         </>
     );
 };
-
-const mapStateToProps = (state) => ({
-    syncRecipes: state.recipes.fetchedRecipes,
-});
-
-const mapDispatchToProps = {
-    fetchRecipes,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Recipes);
