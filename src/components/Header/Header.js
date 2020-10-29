@@ -13,12 +13,6 @@ const Header = ({ showModalCreate, fetchRecipes }) => {
         showModalCreate(true);
     };
 
-    const handleFetch = (event) => {
-        event.preventDefault();
-
-        fetchRecipes();
-    };
-
     return (
         <Navbar
             bg="dark"
@@ -41,9 +35,6 @@ const Header = ({ showModalCreate, fetchRecipes }) => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#fetch" onClick={handleFetch}>
-                            Fetch
-                        </Nav.Link>
                     </Nav>
                     <Nav>
                         <Nav.Link
