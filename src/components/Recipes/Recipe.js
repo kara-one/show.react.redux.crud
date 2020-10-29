@@ -81,7 +81,9 @@ const Recipe = ({
                         errors,
                     }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                            <Card.Img variant="top" src={item.recipeImg} />
+                            <div className="card-img-wrap">
+                                <Card.Img variant="top" src={item.recipeImg} />
+                            </div>
 
                             <Card.Body>
                                 <Collapse in={isEdit}>

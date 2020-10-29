@@ -11,6 +11,23 @@
     &-footer {
         padding: 0;
     }
+
+    &-img-wrap {
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+        height: 300px;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: auto;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translateX(-50%);
+        }
+    }
     
     
     form {
