@@ -1,3 +1,10 @@
+# CRUD application use React Redux
+*show.react.redux.crud*
+- Simple CRUD interface with load data from jsonplaceholder.typicode.com
+- Tools: React.js, Redux, Bootstrap, Express, Heroku
+- Demo: https://show-react-redux-crud.herokuapp.com/
+
+# React readme
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br /><br />
 Test task use React Reduce PostgreSQL
 
